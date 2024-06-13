@@ -1,0 +1,1 @@
+{"version":3,"file":"ICacheOptions.d.ts","sourceRoot":"","sources":["../../../../src/interfaces/ICacheOptions.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,YAAY,EAAE,MAAM,SAAS,CAAA;AAE3C,UAAU,aAAa;IACrB,MAAM,EAAE,QAAQ,GAAG,OAAO,CAAA;IAC1B,aAAa,CAAC,EAAE,YAAY,CAAA;IAC5B,UAAU,CAAC,EAAE,MAAM,CAAA;IACnB,KAAK,CAAC,EAAE,OAAO,CAAA;CAChB;AAED,eAAe,aAAa,CAAA"}
