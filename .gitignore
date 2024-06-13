@@ -4,7 +4,7 @@ Thumbs.db
 
 # Dependency directory
 node_modules
-dist
+#dist
 coverage
 
 # npm debug logs

@@ -8,13 +8,13 @@ import type ICacheEngine from '../interfaces/ICacheEngine'
 import type ICacheOptions from '../interfaces/ICacheOptions'
 
 class CacheEngine {
-  #engine!: ICacheEngine
-  #defaultTTL: number
-  #debug: boolean
-  readonly #engines = ['memory', 'redis'] as const
+  engine!: ICacheEngine
+  defaultTTL: number
+  debug: boolean
+  readonly engines = ['memory', 'redis'] as const
 
   constructor(cacheOptions: ICacheOptions) {
-    if (!this.#engines.includes(cacheOptions.engine)) {
+    if (!this.engines.includes(cacheOptions.engine)) {
       throw new Error(`Invalid engine name: ${cacheOptions.engine}`)
     }
 
@@ -22,22 +22,22 @@ class CacheEngine {
       throw new Error(`Engine options are required for ${cacheOptions.engine} engine`)
     }
 
-    this.#defaultTTL = ms(cacheOptions.defaultTTL ?? '1 minute')
+    this.defaultTTL = ms(cacheOptions.defaultTTL ?? '1 minute')
 
     if (cacheOptions.engine === 'redis' && cacheOptions.engineOptions) {
-      this.#engine = new RedisCacheEngine(cacheOptions.engineOptions)
+      this.engine = new RedisCacheEngine(cacheOptions.engineOptions)
     }
 
     if (cacheOptions.engine === 'memory') {
-      this.#engine = new MemoryCacheEngine()
+      this.engine = new MemoryCacheEngine()
     }
 
-    this.#debug = cacheOptions.debug === true
+    this.debug = cacheOptions.debug === true
   }
 
   async get(key: string): Promise<IData> {
-    const cacheEntry = await this.#engine.get(key)
-    if (this.#debug) {
+    const cacheEntry = await this.engine.get(key)
+    if (this.debug) {
       const cacheHit = (cacheEntry != undefined) ? 'HIT' : 'MISS'
       console.log(`[ts-cache-mongoose] GET '${key}' - ${cacheHit}`)
     }
@@ -45,29 +45,29 @@ class CacheEngine {
   }
 
   async set(key: string, value: IData, ttl: string | null): Promise<void> {
-    const actualTTL = ttl ? ms(ttl) : this.#defaultTTL
-    await this.#engine.set(key, value, actualTTL)
-    if (this.#debug) {
+    const actualTTL = ttl ? ms(ttl) : this.defaultTTL
+    await this.engine.set(key, value, actualTTL)
+    if (this.debug) {
       console.log(`[ts-cache-mongoose] SET '${key}' - ttl: ${actualTTL.toFixed(0)} ms`)
     }
   }
 
   async del(key: string): Promise<void> {
-    await this.#engine.del(key)
-    if (this.#debug) {
+    await this.engine.del(key)
+    if (this.debug) {
       console.log(`[ts-cache-mongoose] DEL '${key}'`)
     }
   }
 
   async clear(): Promise<void> {
-    await this.#engine.clear()
-    if (this.#debug) {
+    await this.engine.clear()
+    if (this.debug) {
       console.log(`[ts-cache-mongoose] CLEAR`)
     }
   }
 
   async close(): Promise<void> {
-    return this.#engine.close()
+    return this.engine.close()
   }
 }
 
