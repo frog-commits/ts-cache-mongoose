@@ -1,0 +1,1 @@
+{"version":3,"file":"query.d.ts","sourceRoot":"","sources":["../../../../src/extend/query.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,QAAQ,EAAE,MAAM,UAAU,CAAA;AACxC,OAAO,KAAK,KAAK,MAAM,gBAAgB,CAAA;AAEvC,MAAM,CAAC,OAAO,UAAU,WAAW,CAAC,QAAQ,EAAE,QAAQ,EAAE,KAAK,EAAE,KAAK,GAAG,IAAI,CAgF1E"}
